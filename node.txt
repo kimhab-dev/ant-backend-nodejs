@@ -1,0 +1,22 @@
++ ==========> other 
+- node 
+	+ cross platform work all os.
+	+ node js code js del run in local 
+									+ node js vs javascript
+	+ why js code egine jea ka convert code pii hight level tv low level (on brower completely have egin)
+	+ v8 sgin for chrome, spider for
+	+ nv in local machine don't have egin so we need install nodeJS for v8 view egin ()
+	+ v8 egine 
+	+ ey deal mean in node vea nv krom Golobal object khos pii brower vea nv krom window object
+- dependency
+	+ express : create API
+	+ mogooes : connectDB
+	+ dotenv : .env
+	+ cors : request from flutter
+	+ bcryptjs : hash password
+	+ jsonwebtoken : create jwt token
+
+- error 
+	+ node module not found is it's can not fine fial
+kimhabsok11_db_user
+PU3QHqkEtLXsqxp9

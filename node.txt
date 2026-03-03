@@ -9,6 +9,8 @@
 	+ v8 egine 
 	+ ey deal mean in node vea nv krom Golobal object khos pii brower vea nv krom window object
 	+ derm3 use buildin module ban yg trov jam name vea and yg trov import nv khang ler ke 
+	+ none blocking IO vea min wait ka tver ka out put 
+	+ import must use ./ pel vea nv location tah muy 
 
 - dependency
 	+ express : create API
@@ -29,3 +31,6 @@ PU3QHqkEtLXsqxp9
 + ==========> code and logic
 	+ setInterval oy vea der rhot 
 	+ file format : baseURL + dirname + filename (on db ke not store file. ke store only name)
+
++ file system 
+	+ vea can work with local computer 

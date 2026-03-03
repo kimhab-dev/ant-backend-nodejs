@@ -8,6 +8,8 @@
 	+ nv in local machine don't have egin so we need install nodeJS for v8 view egin ()
 	+ v8 egine 
 	+ ey deal mean in node vea nv krom Golobal object khos pii brower vea nv krom window object
+	+ derm3 use buildin module ban yg trov jam name vea and yg trov import nv khang ler ke 
+
 - dependency
 	+ express : create API
 	+ mogooes : connectDB
@@ -20,3 +22,10 @@
 	+ node module not found is it's can not fine fial
 kimhabsok11_db_user
 PU3QHqkEtLXsqxp9
+
++ ==========> between
+	+ requirs vs import : it's same but requirs(in commons js), requirs(in ES module)
+
++ ==========> code and logic
+	+ setInterval oy vea der rhot 
+	+ file format : baseURL + dirname + filename (on db ke not store file. ke store only name)

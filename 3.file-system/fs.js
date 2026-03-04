@@ -4,7 +4,6 @@ const fs = require("fs");
 // if we not use utf8 we can use data.toString for convert from lowlevel to hightlevel
 // fs.readFile('../test.txt', 'utf8', (err, data) => {
 //     if (err) console.log(err);
-
 //     console.log(data);
 // });
 

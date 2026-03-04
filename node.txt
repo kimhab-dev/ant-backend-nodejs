@@ -11,6 +11,8 @@
 	+ derm3 use buildin module ban yg trov jam name vea and yg trov import nv khang ler ke 
 	+ none blocking IO vea min wait ka tver ka out put 
 	+ import must use ./ pel vea nv location tah muy 
+	+ pel use frontend with backend hx ot use backend teh nus vea reload page 
+	+ domain use for bit bang IP adrrest rbos website rbos yg 
 
 - dependency
 	+ express : create API
@@ -31,6 +33,12 @@ PU3QHqkEtLXsqxp9
 + ==========> code and logic
 	+ setInterval oy vea der rhot 
 	+ file format : baseURL + dirname + filename (on db ke not store file. ke store only name)
+
++ ==========> cliend and sever 
+	+ derm3 create server ban yg trov mean module server
+	+ req trov nv muk jea nij
+	+ localhost:  name domain rbos local computer is localhost(127.0.0.1)
+	+ port: like tver rbos home yg 
 
 + file system 
 	+ vea can work with local computer 

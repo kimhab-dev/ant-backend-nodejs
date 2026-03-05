@@ -1,5 +1,6 @@
 + ==========> other 
-- node 
+
+=============> about node 
 	+ cross platform work all os.
 	+ node js code js del run in local 
 									+ node js vs javascript
@@ -12,9 +13,9 @@
 	+ none blocking IO vea min wait ka tver ka out put 
 	+ import must use ./ pel vea nv location tah muy 
 	+ pel use frontend with backend hx ot use backend teh nus vea reload page 
-	+ domain use for bit bang IP adrrest rbos website rbos yg 
+	+ domain use for bit bang IP adrrest rbos website rbos yg
 
-- dependency
+============> about dependency
 	+ express : create API
 	+ mogooes : connectDB
 	+ dotenv : .env
@@ -22,10 +23,8 @@
 	+ bcryptjs : hash password
 	+ jsonwebtoken : create jwt token
 
-- error 
+============>  error 
 	+ node module not found is it's can not fine fial
-kimhabsok11_db_user
-PU3QHqkEtLXsqxp9
 
 + ==========> between
 	+ requirs vs import : it's same but requirs(in commons js), requirs(in ES module)
@@ -34,11 +33,20 @@ PU3QHqkEtLXsqxp9
 	+ setInterval oy vea der rhot 
 	+ file format : baseURL + dirname + filename (on db ke not store file. ke store only name)
 
-+ ==========> cliend and sever 
++ ==========> file
+	+ parameter in mkdirSync ({recursive: true}) mean yg check mean mean folder orr nv 
+
++ ==========> server and client
 	+ derm3 create server ban yg trov mean module server
 	+ req trov nv muk jea nij
 	+ localhost:  name domain rbos local computer is localhost(127.0.0.1)
 	+ port: like tver rbos home yg 
 
-+ file system 
-	+ vea can work with local computer 
++ ===========> Asychronous Operation 
+	+ Asynchronous (Async) : A task runs in the background without blocking the rest of the program.
+	+ make user can request same time.
+	+ javascript doest not wait automatically
+
++ ===========> about API
+	+ REST API : a standard way for client and server to communicate using HTTP.(get, post, put, delete, ...)
+	+ Middleware : a function that runs before your route executes.

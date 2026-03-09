@@ -1,5 +1,4 @@
 + ==========> other 
-
 =============> about node 
 	+ cross platform work all os.
 	+ node js code js del run in local 
@@ -14,14 +13,21 @@
 	+ import must use ./ pel vea nv location tah muy 
 	+ pel use frontend with backend hx ot use backend teh nus vea reload page 
 	+ domain use for bit bang IP adrrest rbos website rbos yg
+	+ module thom jeang pakage. buildin module ke create mk srab
+	+ package if install global vea ot jol in package.jsom in project teh 
 
-============> about dependency
+============> about dependency (package)
+	+ npm : node package manager
 	+ express : create API
 	+ mogooes : connectDB
 	+ dotenv : .env
 	+ cors : request from flutter
 	+ bcryptjs : hash password
 	+ jsonwebtoken : create jwt token
+	+ nodemon : help to auto restart server 
+	+ nodeModule: ptuk code rbos package knong ng 
+	+ npm init : create nodeModule, package.json in project
+	+ loadash : help array, math, ......
 
 ============>  error 
 	+ node module not found is it's can not fine fial

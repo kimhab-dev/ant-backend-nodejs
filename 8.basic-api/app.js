@@ -1,14 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());// middleware for covert data from user to js object
+app.use(cors());
 
-let products = [
-    { id: 1, name: "BMW S1000rr", category: "bike", description: "test" },
-    { id: 2, name: "GTR R-35", category: "car", description: "test" },
-    { id: 3, name: "YAMAHA R1M", category: "bike", description: "test" },
-]
-
+let products = [];
+let id = 0;
 app.get("/products", (req, res) => {
     res.json({
         result: true,
@@ -18,16 +16,94 @@ app.get("/products", (req, res) => {
 });
 
 app.post("/products", (req, res) => {
-    console.log(req.body);
+    id++;
+    let newProduct = {
+        id: id,
+        name: req.body.name,
+        category: req.body.category,
+        description: req.body.description
+    }
+    products.push(newProduct);
+    console.log(products);
     res.status(201).json(
         {
             result: true,
             message: "Create product success.",
-            data: [
-                req.body
-            ]
+            data: newProduct
         }
     )
+});
+
+app.put("/products/:id", (req, res) => {
+    let product = products.find(p => p.id === Number(req.params.id));
+    product.name = req.body.name;
+    product.category = req.body.category;
+    product.description = req.body.description;
+    if (!product) {
+        res.json(
+            {
+                result: false,
+                message: "Not Found Product."
+            }
+        );
+        return;
+    }
+
+    if (product) {
+        res.json(
+            {
+                result: true,
+                message: "Update product success.",
+                data: product
+            }
+        );
+        return;
+    }
+})
+
+app.delete("/products/:id", (req, res) => {
+    let product = products.find(p => p.id === Number(req.params.id));
+    let index = products.indexOf(product);
+    if (!product) {
+        res.json(
+            {
+                result: false,
+                message: "Not Found Product."
+            }
+        );
+        return;
+    }
+    if (product) {
+        products.splice(index, 1);
+        res.json(
+            {
+                result: true,
+                message: "Delete Success."
+            }
+        );
+        return;
+    }
+});
+
+app.get("/products/:id", (req, res) => {
+    let product = products.find(p => p.id === Number(req.params.id));
+    if (!product) {
+        res.json(
+            {
+                result: false,
+                message: "Product not found."
+            }
+        )
+    }
+    if (product) {
+        res.json(
+            {
+                result: true,
+                message: "Get product success.",
+                data: product
+            }
+        )
+    }
 })
 
 app.listen(3000, () => {

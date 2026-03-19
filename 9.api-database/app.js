@@ -133,13 +133,18 @@ app.get('/categories', async (req, res) => {
 
 app.post('/categories', async (req, res) => {
     try {
-
-        let [getName] = await pool.query('select name from categories');
-        console.log(getName)
-
-        return;
-        let sql = 'insert into categories (name) values (?)';
         let body = req.body;
+        let [getName] = await pool.query('select name from categories');
+        for (n of getName) {
+            if (body.name === n.name) {
+                return res.json({
+                    result: false,
+                    message: "Data exit have.",
+                })
+            }
+        }
+        let sql = 'insert into categories (name) values (?)';
+
         let data = [body.name];
 
         const [result] = await pool.query(sql, data);

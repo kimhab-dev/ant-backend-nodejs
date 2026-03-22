@@ -1,7 +1,10 @@
 + ==========> other 
+	+ view egin with backend mean backend with client like node with html
 =============> about node 
 	+ cross platform work all os.
 	+ node js code js del run in local 
+	+ forEeach : min mean ey stop vea ban teh. if we want to set condition with loop
+	+ why validate on fron and back : kapea oy ban jrem, custome message.
 									+ node js vs javascript
 	+ why js code egine jea ka convert code pii hight level tv low level (on brower completely have egin)
 	+ v8 sgin for chrome, spider for
@@ -14,7 +17,8 @@
 	+ pel use frontend with backend hx ot use backend teh nus vea reload page 
 	+ domain use for bit bang IP adrrest rbos website rbos yg
 	+ module thom jeang pakage. buildin module ke create mk srab
-	+ package if install global vea ot jol in package.jsom in project teh 
+	+ package if install global vea ot jol in package.jsom in project teh
+	+ pel use post for put orr get for delete vea make oy slow. cuz vea tv delete data hx ban overide pii ler and ot standard
 
 ============> about dependency (package)
 	+ npm : node package manager
@@ -33,14 +37,14 @@
 	+ node module not found is it's can not fine fial
 
 + ==========> between
-	+ requirs vs import : it's same but requirs(in commons js), requirs(in ES module)
+	+ requirs vs import : it's same but requirs(in commons js), import(in ES module)
 
 + ==========> code and logic
 	+ setInterval oy vea der rhot 
 	+ file format : baseURL + dirname + filename (on db ke not store file. ke store only name)
 
 + ==========> file
-	+ parameter in mkdirSync ({recursive: true}) mean yg check mean mean folder orr nv 
+	+ parameter in mkdirSync : ({recursive: true}) mean yg check mean mean folder orr nv 
 
 + ==========> server and client
 	+ derm3 create server ban yg trov mean module server
@@ -53,6 +57,55 @@
 	+ make user can request same time.
 	+ javascript doest not wait automatically
 
++ ===========> Middleware
+	+ middleware is function ad mid between request and respones
+	+ Middleware : a function that runs before your route executes.
+	+ USE for check use request like login, ...... mk
+	+ use with feature 4 thom thom :
+		Logger : track, tam dan sokpheab rbos system, error issue, 
+		Authentication : protect routes, 
+		Middleware parse JSON : ke dak nv khang ler ke 
+		Return 404 : now not make in backend for security
+
+	+ oy tah see app.use is middleware all.
+	+ middleware mean 2 : buildin and user define
+	+ pel use user define must use next();
+
 + ===========> about API
 	+ REST API : a standard way for client and server to communicate using HTTP.(get, post, put, delete, ...)
-	+ Middleware : a function that runs before your route executes.
+	+ restFull api : jea api del use http, have method get, post, put, delete......
+	+ api have => deno, gradio........
+	+ http://localhost:5000/api/products (baseURL + Resources). 
+		- Resources : in server call Resources orr routes, frontend call endpoint, 
+		- baseURL : in backend call HTTP protocol
+	+ helmet kapea header rbos yg
+	+ pel yg bos data pii kleng na mk kan backend rbos yg yg trov convert 
+		vea tv jea JSON object rbos language muy ng. like express convert mk jea js object\
+
++ ===========> Node with data base 
+	+ mySQL 2 new version : vea support with Asychronous function
+	+ create pool : can handle multi request 
+	+ derm connect tv kan DB ke trove ka connection string 
+	+ khos port doy sa yg mean database jren (mySQL, xampp, Workbench) yg trov merl vea
+	+ jek table : if data dulicate
++ ===========> Key word in DB 
+	+ UNIQUE : cannot dulicate but can null 
+
++ ===========> MVC (Model view controller)
+		=> model -> data & business rules
+		=> view -> user interface 
+		=> controller -> handle user input, user req
+	+ controller : handle only req 
+	+ service : logic handle logic
+	+ model : query to database
+	+ route : handle route 
+	+ repository :  
+
+	-> 
+		+ config : handle database, information somthing...
+		+ controller : handle req user (call service, res json)
+		+ model : handle database, query
+		+ routes : endpoint, resources, 
+		+ service : logic, (business logic)
+		+ utils : hyper file, like store function for use 
+	-> 

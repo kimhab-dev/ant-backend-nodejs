@@ -2,10 +2,11 @@ const productService = require('../service/productService');
 
 const getAll = async (req, res) => {
     try {
-        const [rows] = await productService.getAll();
+        const rows = await productService.getAll();
         res.status(200).json({
             message: "Get Successfully.",
             resut: true,
+            totalItem: rows.length,
             data: rows
         });
     } catch (err) {

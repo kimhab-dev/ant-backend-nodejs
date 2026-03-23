@@ -1,15 +1,46 @@
-const pool = require('../config/db');
+const categoryService = require('../service/categoryService')
 
 const getAll = async (req, res) => {
     try {
-        let [rows] = await pool.query('select * from categories');
+        const rows = await categoryService.getAll();
+
         res.status(200).json({
             message: "Get category successfully.",
             resut: true,
+            totalItem: rows.length,
             data: rows
+        });
+
+    } catch (err) {
+        console.log(err);
+
+        res.status(500).json({
+            result: false,
+            msg: "Internal Server Error."
+        });
+    }
+}
+
+const getById = async (req, res) => {
+    const isData = await categoryService.getById(req.params.id);
+
+    if (!isData[0]) {
+        res.json({
+            result: false,
+            message: "Category not found."
+        });
+        return;
+    }
+    try {
+        const row = await categoryService.getById(req.params.id);
+        res.status(200).json({
+            message: "Get category successfully.",
+            resut: true,
+            data: row[0]
         });
     } catch (err) {
         console.log(err);
+
         res.status(500).json({
             result: false,
             msg: "Internal Server Error."
@@ -18,28 +49,23 @@ const getAll = async (req, res) => {
 }
 
 const create = async (req, res) => {
+
     try {
-        let body = req.body;
-        let [getName] = await pool.query('select name from categories');
-        for (n of getName) {
-            if (body.name === n.name) {
-                return res.json({
-                    result: false,
-                    message: "Data exit have.",
-                })
-            }
-        }
-        let sql = 'insert into categories (name) values (?)';
-
-        let data = [body.name];
-
-        const [result] = await pool.query(sql, data);
-        const [row] = await pool.query('select * from categories where id = ?', [result.insertId]);
+        // let [getName] = await pool.query('select name from categories');
+        // for (n of getName) {
+        //     if (body.name === n.name) {
+        //         return res.json({
+        //             result: false,
+        //             message: "Data exit have.",
+        //         })
+        //     }
+        // }
+        const [row] = await categoryService.create(req.body);
 
         return res.json({
             result: true,
             message: "Create categories successfully",
-            data: row[0]
+            data: row
         })
     } catch (err) {
         console.log(err);
@@ -51,31 +77,23 @@ const create = async (req, res) => {
 };
 
 const update = async (req, res) => {
+    const isData = await categoryService.getById(req.params.id);
+
+    if (!isData[0]) {
+        res.json({
+            result: false,
+            message: "Category not found."
+        });
+        return;
+    }
+
     try {
-        const [isData] = await pool.query('select * from categories where id = ?', [req.params.id]);
-
-        if (!isData[0]) {
-            res.json({
-                result: false,
-                message: "categories not found."
-            });
-            return;
-        }
-        let sql = 'update categories set name = ? where id = ?';
-
-        let body = req.body;
-        let data = [body.name, [req.params.id]];
-
-        await pool.query(sql, data);
-
-        // console.log(result);
-
-        const [row] = await pool.query('select * from categories where id = ?', [req.params.id]);
-
+        await categoryService.update(req.body, req.params.id);
+        const [row] = await categoryService.getById(req.params.id);
         res.json({
             result: true,
             message: "Update categories successfully.",
-            data: row[0]
+            data: row
         });
     } catch (err) {
         console.log(err);
@@ -88,18 +106,17 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
     try {
-        let sql = 'delete from categories where id = ?';
-        const [row] = await pool.query('select * from categories where id = ?', [req.params.id]);
+        const isData = await categoryService.getById(req.params.id);
 
-        if (!row[0]) {
+        if (!isData[0]) {
             res.json({
                 result: false,
-                message: "Categories not found."
+                message: "Category not found."
             });
             return;
         }
 
-        await pool.query(sql, Number(req.params.id));
+        await categoryService.remove(req.params.id);
 
         res.json({
             result: true,
@@ -119,5 +136,6 @@ module.exports = {
     getAll,
     create,
     update,
-    remove
+    remove,
+    getById
 }

@@ -1,7 +1,7 @@
 const pool = require('../config/db');
 
 const getAll = async () => {
-    const row = await pool.query('select * from products');
+    const [row] = await pool.query('select * from products');
     return row;
 };
 
@@ -28,7 +28,7 @@ const update = async (body, id) => {
 
 const remove = async (id) => {
     const result = await pool.query('delete from products where id = ?', [id]);
-    return result;
+    return result
 }
 
 module.exports = {

@@ -5,10 +5,12 @@ const {
     getAll,
     create,
     update,
-    remove
+    remove,
+    getById
 } = require('../controllers/productController')
 
 router.get('/products', getAll);
+router.get('/products/:id', getById);
 router.post('/products', create);
 router.put('/products/:id', update);
 router.delete('/products/:id', remove);

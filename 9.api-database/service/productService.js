@@ -1,19 +1,32 @@
-const pool = require('../config/db');
+const productModel = require('../models/productModel')
 const getAll = async function () {
-    let rows = await pool.query('select * from products');
+    let rows = await productModel.getAll();
     return rows;
 };
 
-const create = async function (body) {
-    let sql = 'insert into products (name, category, description) values (?, ?, ?)';
-    let data = [body.name, body.category, body.description];
-    const [result] = await pool.query(sql, data);
-    const [row] = await pool.query('select * from products where id = ?', [result.insertId]);
-
+const getById = async (id) => {
+    let row = await productModel.getById(id);
     return row;
+}
+
+const create = async function (body) {
+    const row = await productModel.create(body);
+    return productModel.getById(row);
+}
+
+const update = async (body, id) => {
+    const row = await productModel.update(body, id);
+    return row;
+}
+
+const remove = async (id) => {
+    return await productModel.remove(id);
 }
 
 module.exports = {
     getAll,
-    create
+    create,
+    getById,
+    update,
+    remove
 }

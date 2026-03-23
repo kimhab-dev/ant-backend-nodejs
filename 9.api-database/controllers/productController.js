@@ -1,8 +1,35 @@
-const productService = require('../service/productService')
+const productService = require('../service/productService');
 
 const getAll = async (req, res) => {
     try {
         const [rows] = await productService.getAll();
+        res.status(200).json({
+            message: "Get Successfully.",
+            resut: true,
+            data: rows
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            result: false,
+            msg: "Internal Server Error."
+        });
+    }
+}
+
+const getById = async (req, res) => {
+    const isData = await productService.getById(req.params.id);
+
+    if (!isData[0]) {
+        res.json({
+            result: false,
+            message: "Product not found."
+        });
+        return;
+    }
+
+    try {
+        const [rows] = await productService.getById(req.params.id);
         res.status(200).json({
             message: "Get Successfully.",
             resut: true,
@@ -35,29 +62,23 @@ const create = async (req, res) => {
 }
 
 const update = async (req, res) => {
+    const isData = await productService.getById(req.params.id);
+
+    if (!isData[0]) {
+        res.json({
+            result: false,
+            message: "Product not found."
+        });
+        return;
+    }
+
     try {
-        const [isData] = await pool.query('select * from products where id = ?', [req.params.id]);
-
-        if (!isData[0]) {
-            res.json({
-                result: false,
-                message: "Product not found."
-            });
-            return;
-        }
-        let sql = 'update products set name = ?, category = ?, description = ? where id = ?';
-
-        let body = req.body;
-        let data = [body.name, body.category, body.description, [req.params.id]];
-
-        await pool.query(sql, data);
-
-        const [row] = await pool.query('select * from products where id = ?', [req.params.id]);
+        const row = await productService.update(req.body, req.params.id);
 
         res.json({
             result: true,
             message: "Update product successfully.",
-            data: row[0]
+            data: row
         });
     } catch (err) {
         console.log(err);
@@ -69,20 +90,18 @@ const update = async (req, res) => {
 }
 
 const remove = async (req, res) => {
+    const isData = await productService.getById(req.params.id);
+
+    if (!isData[0]) {
+        res.json({
+            result: false,
+            message: "Product not found."
+        });
+        return;
+    }
+
     try {
-        let sql = 'delete from products where id = ?';
-        const [row] = await pool.query('select * from products where id = ?', [req.params.id]);
-
-        if (!row[0]) {
-            res.json({
-                result: false,
-                message: "Product not found."
-            });
-            return;
-        }
-
-        await pool.query(sql, Number(req.params.id));
-
+        productService.remove(req.params.id);
         res.json({
             result: true,
             message: "Delete category successfully."
@@ -101,5 +120,6 @@ module.exports = {
     getAll,
     create,
     update,
-    remove
+    remove,
+    getById
 };

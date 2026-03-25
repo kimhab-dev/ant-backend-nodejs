@@ -1,5 +1,6 @@
 + ==========> other 
-	+ view egin with backend mean backend with client like node with html
+	+ view egin with backend mean backend with client like node with html 
+	+ if we write return in for forEeach it's can stop loop but code below normal work.
 =============> about node 
 	+ cross platform work all os.
 	+ node js code js del run in local 
@@ -92,7 +93,8 @@
 	+ UNIQUE : cannot dulicate but can null 
 
 + ===========> MVC (Model view controller)
-		=> model -> data & business rules
+	-> model -> service -> controller
+		=> model -> data & business rules handle schema 
 		=> view -> user interface 
 		=> controller -> handle user input, user req
 	+ controller : handle only req 

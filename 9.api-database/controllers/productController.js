@@ -65,7 +65,7 @@ const create = async (req, res) => {
 const update = async (req, res) => {
     const isData = await productService.getById(req.params.id);
 
-    if (!isData[0]) {
+    if (isData.length == 0) {
         res.json({
             result: false,
             message: "Product not found."

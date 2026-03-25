@@ -36,7 +36,6 @@ const setInActive = async (id) => {
 }
 
 const remove = async (id) => {
-    console.log(id);
     return await pool.query('DELETE FROM users WHERE id = ?', [id]);
 }
 

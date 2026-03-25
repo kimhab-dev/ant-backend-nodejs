@@ -3,13 +3,18 @@ const userModel = require('../model/userModel');
 
 const create = async (req, res) => {
     try {
+        if (!req.body.email) {
+            return res.json({
+                result: false,
+                msg: "Email is require."
+            });
+        }
         const isEmail = await userModel.findEmail(req.body.email);
         if (isEmail) {
-            res.json({
+            return res.json({
                 result: false,
                 msg: "Email alredy is use."
             });
-            return;
         }
         const [row] = await userService.create(req.body);
         res.status(200).json({

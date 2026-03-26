@@ -34,7 +34,8 @@
 	+ npm init : create nodeModule, package.json in project
 	+ loadash : help array, math, ......
 	+ express-session : is a middleware in Node.js + Express used to create and manage user sessions on the server. it's can remember on server
-
+	+ --> research 
+		- express-async-handler
 ============>  error 
 	+ node module not found is it's can not fine fial
 
@@ -50,7 +51,11 @@
 
 + ==========> server and client
 	+ derm3 create server ban yg trov mean module server
-	+ req trov nv muk jea nij
+	+ req trov nv muk jea nich
+	+ req.query : get query string (pagination, filtering, search)
+	+ req.header : get header (token, API key...)
+	+ req.session : when using express-session 
+	+ req.user : This is NOT built-in, but used everywhere
 	+ localhost:  name domain rbos local computer is localhost(127.0.0.1)
 	+ port: like tver rbos home yg 
 
@@ -112,6 +117,11 @@
 		+ service : logic, (business logic)
 		+ utils : hyper file, like store function for use 
 	-> 
+	+ We usually put try...catch in the controller because it’s the place that handles the HTTP response.
+	+ if we want to use try catch in service can use for custome error and throw pass controller
+
++ ===========> Authentication
 
 
-+ => express session, export varible 
+
++ => express session, export varible, ke tver error handller in middleware men teh 

@@ -33,6 +33,7 @@
 	+ nodeModule: ptuk code rbos package knong ng 
 	+ npm init : create nodeModule, package.json in project
 	+ loadash : help array, math, ......
+	+ express-session : is a middleware in Node.js + Express used to create and manage user sessions on the server. it's can remember on server
 
 ============>  error 
 	+ node module not found is it's can not fine fial
@@ -111,3 +112,6 @@
 		+ service : logic, (business logic)
 		+ utils : hyper file, like store function for use 
 	-> 
+
+
++ => express session, export varible 

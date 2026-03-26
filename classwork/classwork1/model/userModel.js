@@ -1,7 +1,7 @@
 const pool = require('../config/db')
 
 const getAll = async () => {
-    const [rows] = await pool.query('select * from users');
+    const [rows] = await pool.query('SELECT * FROM users');
     return rows;
 }
 
@@ -12,7 +12,7 @@ const findEmail = async (email) => {
 }
 
 const create = async (body) => {
-    let sql = 'insert into users (name, email) values (?, ?)';
+    let sql = 'INSERT INTO users (name, email) values (?, ?)';
     let data = [body.name, body.email];
     const [result] = await pool.query(sql, data);
     return result.insertId;
@@ -36,7 +36,7 @@ const setInActive = async (id) => {
 }
 
 const remove = async (id) => {
-    return await pool.query('DELETE FROM users WHERE id = ?', [id]);
+    await pool.query('DELETE FROM users WHERE id = ?', [id]);
 }
 
 module.exports = {

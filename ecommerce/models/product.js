@@ -10,10 +10,9 @@ const getById = async (id) => {
     return row;
 }
 
-
 const create = async (product) => {
-    const sql = 'INSERT INTO products (name, category, description) VALUES (?, ?, ?)';
-    const data = [product.name, product.category, product.description];
+    const sql = 'INSERT INTO products (name, category, price, description) VALUES (?, ?, ?, ?)';
+    const data = [product.name, product.category, product.price, product.description];
     const [result] = await pool.query(sql, data);
     return result.insertId;
 }

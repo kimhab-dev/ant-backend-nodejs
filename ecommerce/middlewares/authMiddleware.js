@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-        return res.json({
+        return res.status(401).json({
             result: false,
             message: "Unauthorization"
         });
@@ -18,7 +18,6 @@ const authMiddleware = async (req, res, next) => {
     } catch (err) {
         return res.status(403).json({ message: "Invalid token" });
     }
-    next();
 }
 
 module.exports = authMiddleware;

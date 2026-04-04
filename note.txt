@@ -121,6 +121,7 @@
 	+ if we want to use try catch in service can use for custome error and throw pass controller
 
 + ===========> Authentication
+	+ kun som bat knong ka manage tv ler user profile by token 
 
 
 + => express session, export varible, ke tver error handller in middleware men teh 

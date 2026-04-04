@@ -2,3 +2,8 @@
 	+ node is none blocking I/O : vea lern vea min mean ka wait data.
     + cross plate form          : vea can run all OS.
     + run on local              : vea can run on local machine.
+-------------> research
+    + UDP(user datagram protocol)	: vea protocol nv transports layers use for send data fast real time;
+    + TCP (Transmission Control Protocol)
+     + WebSockets (ws) : use real time vea min mean req derm 3 res doj server in node teh
+

@@ -20,20 +20,19 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { data, token } = await auth.login(req.body);
-        const result = {
-            id: data.id,
-            name: data.name,
-            email: data.email,
-            role: data.role,
-            is_active: data.is_active,
-            created_at: data.created_at
-        }
+        const data = await auth.login(req.body);
+        // const result = {
+        //     id: data.id,
+        //     name: data.name,
+        //     email: data.email,
+        //     role: data.role,
+        //     is_active: data.is_active,
+        //     created_at: data.created_at
+        // }
         return res.json({
             result: true,
             message: "login successfully.",
-            data: result,
-            token
+            data: data,
         })
 
     } catch (err) {
@@ -45,7 +44,16 @@ const login = async (req, res) => {
     }
 }
 
+const getMe = async (req, res) => {
+    try {
+        console.log(req.user);
+    } catch (error) {
+
+    }
+}
+
 module.exports = {
     register,
-    login
+    login,
+    getMe
 }

@@ -1,17 +1,12 @@
 const pool = require('../config/db');
 
-const userInfor = async (email) => {
+const getByEmail = async (email) => {
     let [row] = await pool.query("SELECT id, email, password, role, is_active, created_at FROM users WHERE email = ?", [email]);
     return row;
 }
 
-const getRegister = async (id) => {
-    let [row] = await pool.query('SELECT id, name, email, role, is_active, created_at FROM users WHERE id = ?', [id]);
-    return row;
-}
-
 const getById = async (id) => {
-    let [row] = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
+    let [row] = await pool.query('SELECT id, name, email, role, is_active, created_at, token FROM users WHERE id = ?', [id]);
     return row;
 }
 
@@ -22,20 +17,13 @@ const register = async (user) => {
     return row.insertId;
 }
 
-const login = async (user) => {
-    const [row] = await pool.query('SELECT * FROM users WHERE email = ?', [user.email]);
-    return row;
-}
-
 const addToken = async (token, id) => {
     await pool.query('UPDATE users SET token = ? WHERE id = ?', [token, id]);
 }
 
 module.exports = {
-    userInfor,
+    getByEmail,
     register,
     getById,
-    getRegister,
-    login,
     addToken
 }

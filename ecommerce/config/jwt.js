@@ -1,6 +1,6 @@
 const jwtConfig = {
     secret: 'mysecret',
-    expiresIn: "1d"
+    expiresIn: "15m"
 }
 
 module.exports = jwtConfig

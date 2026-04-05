@@ -46,7 +46,12 @@ const login = async (req, res) => {
 
 const getMe = async (req, res) => {
     try {
-        console.log(req.user);
+        const row = await auth.getMe(req.user);
+        return res.json({
+            result: true,
+            message: "get profile successfully.",
+            data: row,
+        })
     } catch (error) {
 
     }

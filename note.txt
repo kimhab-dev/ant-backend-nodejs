@@ -122,6 +122,18 @@
 
 + ===========> Authentication
 	+ kun som bat knong ka manage tv ler user profile by token 
+	+ secret key breab ban doj jea key jak door when we jak key ng pel dos vinh kor trov jak key ng de 
 
+	--> access token vs refresh token 
+		+ aceess token 
+			- short time, use for aceess api, store user info 
+		+ refresh token 
+			- long time
+			- use for generate new token,
+			- find acttack
+	---> why we should store refresh token in db
+	+ if we not store token in db teh when we logout but token still can use 
 
+------------> question to teacher
 + => express session, export varible, ke tver error handller in middleware men teh 
++ when get data from data ready and what is delete data.password

@@ -8,6 +8,7 @@ const register = async (body) => {
         throw new Error("name, email and password is require");
     }
 
+    // check have email orr not
     const checkemail = await user.getByEmail(body.email);
     if (checkemail.length > 0) {
         throw new Error("Email already exists");
@@ -15,6 +16,7 @@ const register = async (body) => {
 
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
+    // create new user
     // const result = await user.register({ ...body, hashedPassword });
     const result = await user.register({
         name: body.name,
@@ -22,7 +24,7 @@ const register = async (body) => {
         password: hashedPassword
     });
 
-    const [row] = await user.getRegister(result);
+    const [row] = await user.getById(result);
     return row;
 }
 
@@ -30,11 +32,13 @@ const login = async (body) => {
     if (!body.email || !body.password) {
         throw new Error("email and password is require.");
     }
-    const row = await user.userInfor(body.email);
+    const row = await user.getByEmail(body.email);
     if (row.length === 0) {
         throw new Error("User not found.");
     }
     const data = row[0];
+
+    // conpare password user and password in database
     const isMatch = await bcrypt.compare(body.password, data.password);
     if (!isMatch) {
         throw new Error("invalid username or password.");
@@ -46,21 +50,21 @@ const login = async (body) => {
         { expiresIn: jwtConfig.expiresIn }
     );
 
-    // insert token into data   
+    // insert token into data base   
     await user.addToken(token, data.id);
 
-    return {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        role: data.role,
-        is_active: data.is_active,
-        created_at: data.created_at,
-        token
-    };
+    const [userInfo] = await user.getById(data.id);
+
+    return userInfo;
+}
+
+const getMe = async (data) => {
+    const [row] = await user.getById(data.id);
+    return row;
 }
 
 module.exports = {
     register,
     login,
+    getMe
 }

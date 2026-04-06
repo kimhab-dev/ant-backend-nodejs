@@ -23,9 +23,9 @@ const login = async (req, res) => {
         const data = await auth.login(req.body);
 
         // save refresh token in cookie
-        res.cookie("refreshToken", data.token, {
+        res.cookie("refreshToken", data.refreshToken, {
             httpOnly: true,
-            secure: false, // true if HTTPS
+            secure: false,
             sameSite: "strict",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
@@ -37,6 +37,8 @@ const login = async (req, res) => {
         })
 
     } catch (err) {
+        console.log(err);
+
         return res.json({
             result: false,
             message: "Login fail.",
@@ -46,10 +48,13 @@ const login = async (req, res) => {
 }
 
 const refresh = async (req, res) => {
-
-    console.log(req.cookie);
     try {
-        const token = req.cookie.refreshToken;
+        console.log();
+
+        const header = req.headers.cookie;
+
+        const path = header.split('=');
+        const token = path[1];
 
         const data = await auth.refreshToken(token);
 

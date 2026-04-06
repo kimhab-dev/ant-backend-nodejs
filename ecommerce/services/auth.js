@@ -55,15 +55,15 @@ const login = async (body) => {
     );
 
     // Refresh Token (long)
-    // const refreshToken = jwt.sign(
-    //     { id: data.id },
-    //     refreshJwtConfig.secret,
-    //     { expiresIn: "7d" }
-    // );
+    const refreshToken = jwt.sign(
+        { id: data.id },
+        refreshJwtConfig.secret,
+        { expiresIn: "7d" }
+    );
 
     // save refresh token in DB
-    // await user.addToken(refreshToken, data.id);
-    await user.addToken(accessToken, data.id);
+    await user.addToken(refreshToken, data.id);
+    // await user.addToken(accessToken, data.id);
 
 
     const [userInfo] = await user.getById(data.id);
@@ -72,7 +72,8 @@ const login = async (body) => {
 
     return {
         user: userInfo,
-        token: accessToken
+        token: accessToken,
+        refreshToken
     };
 }
 
@@ -83,7 +84,7 @@ const refreshToken = async (token) => {
 
     let decoded;
     try {
-        decoded = jwt.verify(token, jwtConfig.refreshSecret);
+        decoded = jwt.verify(token, refreshJwtConfig.secret);
     } catch (err) {
         throw new Error("Invalid refresh token");
     }
@@ -105,8 +106,6 @@ const refreshToken = async (token) => {
 
 const getMe = async (data) => {
     const [row] = await user.getById(data.id);
-    // delete row.token;
-    // return row;
     const userInfo = {
         id: row.id,
         name: row.name,

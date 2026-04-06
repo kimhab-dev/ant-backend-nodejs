@@ -1,6 +1,6 @@
 const jwtConfig = {
     secret: 'mysecret',
-    expiresIn: "15m",
+    expiresIn: "1m",
 }
 
 const refreshJwtConfig = {

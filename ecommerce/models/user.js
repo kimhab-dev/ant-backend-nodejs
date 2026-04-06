@@ -21,9 +21,20 @@ const addToken = async (token, id) => {
     await pool.query('UPDATE users SET token = ? WHERE id = ?', [token, id]);
 }
 
+const checkToken = async (token) => {
+    let [row] = await pool.query('SELECT * FROM users WHERE token = ?', [token]);
+    return row;
+}
+
+const logout = async (id) => {
+    await pool.query('UPDATE users SET token = null WHERE id = ?', [id]);
+}
+
 module.exports = {
     getByEmail,
     register,
     getById,
-    addToken
+    addToken,
+    logout,
+    checkToken
 }

@@ -1,7 +1,7 @@
 const user = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const jwtConfig = require('../config/jwt')
+const { jwtConfig, refreshJwtConfig } = require('../config/jwt')
 
 const register = async (body) => {
     if (!body.name || !body.email || !body.password) {
@@ -36,7 +36,10 @@ const login = async (body) => {
     if (row.length === 0) {
         throw new Error("User not found.");
     }
+
     const data = row[0];
+
+    console.log(row);
 
     // conpare password user and password in database
     const isMatch = await bcrypt.compare(body.password, data.password);
@@ -44,27 +47,85 @@ const login = async (body) => {
         throw new Error("invalid username or password.");
     }
 
-    const token = jwt.sign(
+    // Access Token (short)
+    const accessToken = jwt.sign(
         { id: data.id, name: data.name },
         jwtConfig.secret,
         { expiresIn: jwtConfig.expiresIn }
     );
 
-    // insert token into data base   
-    await user.addToken(token, data.id);
+    // Refresh Token (long)
+    // const refreshToken = jwt.sign(
+    //     { id: data.id },
+    //     refreshJwtConfig.secret,
+    //     { expiresIn: "7d" }
+    // );
+
+    // save refresh token in DB
+    // await user.addToken(refreshToken, data.id);
+    await user.addToken(accessToken, data.id);
+
 
     const [userInfo] = await user.getById(data.id);
 
-    return userInfo;
+    delete userInfo.token;
+
+    return {
+        user: userInfo,
+        token: accessToken
+    };
 }
+
+const refreshToken = async (token) => {
+    if (!token) {
+        throw new Error("No token");
+    }
+
+    let decoded;
+    try {
+        decoded = jwt.verify(token, jwtConfig.refreshSecret);
+    } catch (err) {
+        throw new Error("Invalid refresh token");
+    }
+
+    const row = await user.getById(decoded.id);
+
+    if (row.length === 0 || row[0].token !== token) {
+        throw new Error("Token not match");
+    }
+
+    const newAccessToken = jwt.sign(
+        { id: decoded.id },
+        jwtConfig.secret,
+        { expiresIn: "15m" }
+    );
+
+    return { accessToken: newAccessToken };
+};
 
 const getMe = async (data) => {
     const [row] = await user.getById(data.id);
-    return row;
+    // delete row.token;
+    // return row;
+    const userInfo = {
+        id: row.id,
+        name: row.name,
+        email: row.email,
+        role: row.role,
+        is_active: row.is_active,
+        created_at: row.created_at
+    }
+    return userInfo;
+}
+
+const logout = async (id) => {
+    await user.logout(id);
 }
 
 module.exports = {
     register,
     login,
-    getMe
+    getMe,
+    logout,
+    refreshToken
 }

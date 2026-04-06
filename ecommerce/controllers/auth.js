@@ -21,14 +21,15 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const data = await auth.login(req.body);
-        // const result = {
-        //     id: data.id,
-        //     name: data.name,
-        //     email: data.email,
-        //     role: data.role,
-        //     is_active: data.is_active,
-        //     created_at: data.created_at
-        // }
+
+        // save refresh token in cookie
+        res.cookie("refreshToken", data.token, {
+            httpOnly: true,
+            secure: false, // true if HTTPS
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        });
+
         return res.json({
             result: true,
             message: "login successfully.",
@@ -44,6 +45,27 @@ const login = async (req, res) => {
     }
 }
 
+const refresh = async (req, res) => {
+
+    console.log(req.cookie);
+    try {
+        const token = req.cookie.refreshToken;
+
+        const data = await auth.refreshToken(token);
+
+        return res.json({
+            result: true,
+            accessToken: data.accessToken
+        });
+
+    } catch (err) {
+        return res.status(403).json({
+            result: false,
+            message: err.message
+        });
+    }
+};
+
 const getMe = async (req, res) => {
     try {
         const row = await auth.getMe(req.user);
@@ -53,12 +75,26 @@ const getMe = async (req, res) => {
             data: row,
         })
     } catch (error) {
+        console.log(error);
+    }
+}
 
+const logout = async (req, res) => {
+    try {
+        await auth.logout(req.user.id);
+        return res.json({
+            result: true,
+            message: "loggount successfully.",
+        })
+    } catch (error) {
+        console.log(error)
     }
 }
 
 module.exports = {
     register,
     login,
-    getMe
+    getMe,
+    logout,
+    refresh
 }

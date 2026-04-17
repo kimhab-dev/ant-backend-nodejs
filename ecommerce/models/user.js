@@ -11,8 +11,9 @@ const getById = async (id) => {
 }
 
 const register = async (user) => {
-    const sql = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
-    let data = [user.name, user.email, user.password];
+    console.log(user.ericationTokenExpires)
+    const sql = 'INSERT INTO users (name, email, password, verification_token, verification_expires) VALUES (?, ?, ?, ?, ?)';
+    let data = [user.name, user.email, user.password, user.vericationToken, user.vericationTokenExpires];
     let [row] = await pool.query(sql, data);
     return row.insertId;
 }

@@ -33,7 +33,8 @@
 	+ nodeModule: ptuk code rbos package knong ng 
 	+ npm init : create nodeModule, package.json in project
 	+ loadash : help array, math, ......
-	+ express-session : is a middleware in Node.js + Express used to create and manage user sessions on the server. it's can remember on server
+	+ express-session : is a middleware in Node.js + Express used to create and manage user sessions on the server. it's can remember on server.
+	+ npm audit fix : clear warning in package
 	+ --> research 
 		- express-async-handler
 ============>  error 
@@ -133,6 +134,14 @@
 			- find acttack
 	---> why we should store refresh token in db
 	+ if we not store token in db teh when we logout but token still can use 
+	---> verify email 
+	+ nodemailer
+
+	-> user regiser => token -> user, token -> database => user clickling verify token 
+		-> user register 
+		-> 
+	-> mail server use for send email 
+
 
 ------------> question to teacher
 + => express session, export varible, ke tver error handller in middleware men teh 

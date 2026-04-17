@@ -1,7 +1,9 @@
 const user = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { jwtConfig, refreshJwtConfig } = require('../config/jwt')
+const { jwtConfig } = require('../config/jwt')
+const crypto = require('crypto');
+const sendMailVerication = require('./mailService')
 
 const register = async (body) => {
     if (!body.name || !body.email || !body.password) {
@@ -16,13 +18,20 @@ const register = async (body) => {
 
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
+    const vericationToken = await crypto.randomBytes(32).toString('hex');
+    const vericationTokenExpires = new Date(Date.now() + 60 * 60 * 1000);
+
     // create new user
     // const result = await user.register({ ...body, hashedPassword });
     const result = await user.register({
         name: body.name,
         email: body.email,
-        password: hashedPassword
+        password: hashedPassword,
+        vericationToken,
+        vericationTokenExpires
     });
+
+    await sendMailVerication.sendVerificationEmail(body.email, vericationToken);
 
     const [row] = await user.getById(result);
     return row;
@@ -39,8 +48,6 @@ const login = async (body) => {
 
     const data = row[0];
 
-    console.log(row);
-
     // conpare password user and password in database
     const isMatch = await bcrypt.compare(body.password, data.password);
     if (!isMatch) {
@@ -55,15 +62,15 @@ const login = async (body) => {
     );
 
     // Refresh Token (long)
-    const refreshToken = jwt.sign(
-        { id: data.id },
-        refreshJwtConfig.secret,
-        { expiresIn: "7d" }
-    );
+    // const refreshToken = jwt.sign(
+    //     { id: data.id },
+    //     refreshJwtConfig.secret,
+    //     { expiresIn: "7d" }
+    // );
 
     // save refresh token in DB
-    await user.addToken(refreshToken, data.id);
-    // await user.addToken(accessToken, data.id);
+    // await user.addToken(refreshToken, data.id);
+    await user.addToken(accessToken, data.id);
 
 
     const [userInfo] = await user.getById(data.id);
@@ -72,37 +79,36 @@ const login = async (body) => {
 
     return {
         user: userInfo,
-        token: accessToken,
-        refreshToken
+        token: accessToken
     };
 }
 
-const refreshToken = async (token) => {
-    if (!token) {
-        throw new Error("No token");
-    }
+// const refreshToken = async (token) => {
+//     if (!token) {
+//         throw new Error("No token");
+//     }
 
-    let decoded;
-    try {
-        decoded = jwt.verify(token, refreshJwtConfig.secret);
-    } catch (err) {
-        throw new Error("Invalid refresh token");
-    }
+//     let decoded;
+//     try {
+//         decoded = jwt.verify(token, refreshJwtConfig.secret);
+//     } catch (err) {
+//         throw new Error("Invalid refresh token");
+//     }
 
-    const row = await user.getById(decoded.id);
+//     const row = await user.getById(decoded.id);
 
-    if (row.length === 0 || row[0].token !== token) {
-        throw new Error("Token not match");
-    }
+//     if (row.length === 0 || row[0].token !== token) {
+//         throw new Error("Token not match");
+//     }
 
-    const newAccessToken = jwt.sign(
-        { id: decoded.id },
-        jwtConfig.secret,
-        { expiresIn: "15m" }
-    );
+//     const newAccessToken = jwt.sign(
+//         { id: decoded.id },
+//         jwtConfig.secret,
+//         { expiresIn: "15m" }
+//     );
 
-    return { accessToken: newAccessToken };
-};
+//     return { accessToken: newAccessToken };
+// };
 
 const getMe = async (data) => {
     const [row] = await user.getById(data.id);
@@ -126,5 +132,5 @@ module.exports = {
     login,
     getMe,
     logout,
-    refreshToken
+    // refreshToken
 }

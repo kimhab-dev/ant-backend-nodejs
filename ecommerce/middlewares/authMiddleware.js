@@ -21,13 +21,13 @@ const authMiddleware = async (req, res, next) => {
     }
 
     const token = parts[1];
-    // const userInfo = await user.checkToken(token);
-    // if (userInfo.length === 0) {
-    //     return res.status(401).json({
-    //         result: false,
-    //         message: "Invalid token or expide"
-    //     });
-    // }
+    const userInfo = await user.checkToken(token);
+    if (userInfo.length === 0) {
+        return res.status(401).json({
+            result: false,
+            message: "Invalid token or expide"
+        });
+    }
     try {
         const decoded = jwt.verify(token, jwtConfig.secret);
         req.user = decoded;

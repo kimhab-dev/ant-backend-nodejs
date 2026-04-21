@@ -9,7 +9,7 @@ app.use(express.json());
 
 // app.use(cookieParser);
 
-app.use(auth);
+app.use('/api/auth', auth);
 app.use(product);
 app.use(category);
 

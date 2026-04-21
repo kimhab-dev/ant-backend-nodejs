@@ -1,6 +1,6 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware');
-const { register, login, getMe, logout, refresh } = require('../controllers/auth');
+const { register, login, getMe, logout, refresh, verifyEmail } = require('../controllers/auth');
 
 const router = express.Router();
 
@@ -9,6 +9,7 @@ router.post('/login', login);
 router.get('/me', authMiddleware, getMe);
 router.delete('/logout', authMiddleware, logout);
 router.post('/refresh', refresh);
+router.post('/verify-email', verifyEmail);
 
 
 module.exports = router;

@@ -31,11 +31,22 @@ const logout = async (id) => {
     await pool.query('UPDATE users SET token = null WHERE id = ?', [id]);
 }
 
+const findByVerication = async (token) => {
+    let [row] = await pool.query('SELECT * FROM users WHERE verification_token = ?', [token]);
+    return row;
+}
+
+const verifyEmail = async (id) => {
+    await pool.query('UPDATE users set is_verified = 1 WHERE id = ?', [id]);
+}
+
 module.exports = {
     getByEmail,
     register,
     getById,
     addToken,
     logout,
-    checkToken
+    checkToken,
+    findByVerication,
+    verifyEmail
 }

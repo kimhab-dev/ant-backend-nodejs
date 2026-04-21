@@ -141,6 +141,9 @@
 		-> user register 
 		-> 
 	-> mail server use for send email 
+	+ query string (?) khos pii param (:) => ? mean kor ban ot kor ban, (:) trov tah mean 
+	+ oy tah nv kroy (?) hav query string 
+	+ model 1 service 1
 
 
 ------------> question to teacher

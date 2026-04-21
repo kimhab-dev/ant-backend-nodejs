@@ -1,7 +1,7 @@
 const pool = require('../config/db');
 
 const getByEmail = async (email) => {
-    let [row] = await pool.query("SELECT id, email, password, role, is_active, created_at FROM users WHERE email = ?", [email]);
+    let [row] = await pool.query("SELECT id, email, password, role, is_active, is_verified, created_at FROM users WHERE email = ?", [email]);
     return row;
 }
 
@@ -40,6 +40,11 @@ const verifyEmail = async (id) => {
     await pool.query('UPDATE users set is_verified = 1 WHERE id = ?', [id]);
 }
 
+const resendVerifycationEmail = async (body) => {
+    const data = [body.vericationToken, body.vericationTokenExpires, body.id];
+    await pool.query('UPDATE users SET verification_token = ?, verification_expires = ? WHERE id = ?', data);
+}
+
 module.exports = {
     getByEmail,
     register,
@@ -48,5 +53,6 @@ module.exports = {
     logout,
     checkToken,
     findByVerication,
-    verifyEmail
+    verifyEmail,
+    resendVerifycationEmail
 }

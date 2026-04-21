@@ -37,6 +37,9 @@
 	+ npm audit fix : clear warning in package
 	+ --> research 
 		- express-async-handler
+		----- for upload file and image
+		+ epress file upload
+		+ booler
 ============>  error 
 	+ node module not found is it's can not fine fial
 

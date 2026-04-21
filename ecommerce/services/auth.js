@@ -149,11 +149,42 @@ const logout = async (id) => {
     await user.logout(id);
 }
 
+const resendVerifycationEmail = async (email) => {
+    if (!email) {
+        throw new Error("email is require.");
+    }
+
+    const row = await user.getByEmail(email);
+    console.log(row);
+
+    if (row.length === 0) {
+        throw new Error("invalid email.");
+    }
+
+    if (row[0].is_verified) {
+        throw new Error("Email already verify.");
+    }
+
+    const vericationToken = await crypto.randomBytes(32).toString('hex');
+    const vericationTokenExpires = new Date(Date.now() + 2 * 60 * 1000);
+
+    await user.resendVerifycationEmail({
+        vericationToken,
+        vericationTokenExpires,
+        id: row[0].id
+    })
+
+    await sendMailVerication.sendVerificationEmail(email, vericationToken);
+    return { message: "Resend email successfully" }
+
+}
+
 module.exports = {
     register,
     login,
     getMe,
     logout,
     // refreshToken,
-    verifyEmail
+    verifyEmail,
+    resendVerifycationEmail
 }
